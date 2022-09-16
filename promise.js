@@ -1,24 +1,20 @@
 const { promiseTheaterIXX, promiseTheaterVGC } = require("./external.js");
 
 // TODO: Buat fungsi promiseOutput sesuai ketentuan readme
-const promiseOutput = (emosi) => {
+const promiseOutput = async (emosi) => {
   let count = 0;
-  promiseTheaterIXX()
-    .then((result) => {
-      result.map((values) => {
-        if (values.hasil == emosi) count += 1;
-      });
-      return promiseTheaterVGC();
-    })
-    .then((result) => {
-      result.map((values) => {
-        if (values.hasil == emosi) count += 1;
-      });
-      console.log(count)
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+
+  const ixx = await promiseTheaterIXX();
+  ixx.map((values) => {
+    if (values.hasil == emosi) count += 1;
+  });
+  
+  const vgc = await promiseTheaterVGC();
+  vgc.map((values) => {
+    if (values.hasil == emosi) count += 1;
+  });
+
+  return count;
 };
 module.exports = {
   promiseOutput,
